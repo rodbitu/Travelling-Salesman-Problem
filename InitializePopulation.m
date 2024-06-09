@@ -1,7 +1,6 @@
-% Função: InitializePopulation.m
-function population = InitializePopulation(popSize, numCities)
-    population = zeros(popSize, numCities);
+function population = InitializePopulation(popSize, nCities)
+    population = zeros(popSize, nCities);
     for i = 1:popSize
-        population(i, :) = randperm(numCities);
+        population(i, :) = randperm(nCities);
     end
 end

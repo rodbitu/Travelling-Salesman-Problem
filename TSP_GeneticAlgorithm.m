@@ -1,59 +1,89 @@
-% Script principal: TSP_GeneticAlgorithm.m
+function TSP_GeneticAlgorithm
+    % Número de cidades
+    nCities = 30;
 
-% Parâmetros do AG
-numCities = 30;
-populationSize = 60;
-numGenerations = 300;
-mutationRate = 0.001;
-crossoverRate = 0.6;
+    % Coordenadas fixas das cidades
+    cities = [    
+        95, 250;
+        262, 102;
+        22, 108;
+        179, 320;
+        142, 114;
+        319, 231;
+        324, 320;
+        179, 42;
+        323, 41;
+        49, 189;
+        179, 175;
+        30, 251;
+        30, 321;
+        326, 107;
+        107, 37;
+        250, 246;
+        244, 316;
+        247, 40;
+        84, 104;
+        147, 246;
+        121, 319;
+        203, 108;
+        325, 176;
+        22, 176;
+        88, 321;
+        108, 182;
+        193, 242;
+        246, 173;
+        37, 40;
+        326, 263;
+];
 
-% Gerar coordenadas das cidades
-cities = rand(numCities, 2);
+    % Parâmetros do Algoritmo Genético
+    popSize = 60;
+    nGenerations = 300;
+    crossoverRate = 0.6;
+    mutationRate = 0.001;
 
-HeatMap(cities)
+    % Inicialização da população
+    population = InitializePopulation(popSize, nCities);
 
-% Inicializar a população
-population = InitializePopulation(populationSize, numCities);
+    % Inicialização das variáveis para armazenar a melhor rota e distância
+    bestFitnessOverall = inf;
+    bestRouteOverall = [];
 
-% Avaliar a população inicial
-fitness = EvaluatePopulation(population, cities);
+    % Evolução
+    for gen = 1:nGenerations
+        % Avaliação
+        fitness = EvaluatePopulation(population, cities);
 
-% Loop principal do AG
-for generation = 1:numGenerations
-    % Seleção
-    selectedPopulation = Selection(population, fitness);
-    
-    % Cruzamento
-    newPopulation = Crossover(selectedPopulation, crossoverRate);
-    
-    % Mutação
-    newPopulation = Mutate(newPopulation, mutationRate);
-    
-    % Avaliação
-    fitness = EvaluatePopulation(newPopulation, cities);
-    
-    % Atualizar a população
-    population = newPopulation;
-    
-    % Melhor solução da geração
-    [bestFitness, bestIdx] = min(fitness);
-    bestSolution = population(bestIdx, :);
-    
-    % Mostrar progresso
-    fprintf('Geração %d: Melhor Distância = %.2f\n', generation, bestFitness);
-end
+        % Seleção
+        selected = Selection(population, fitness);
 
-% Plotar a melhor rota encontrada
-figure;
-plot(cities(bestSolution, 1), cities(bestSolution, 2), 'ro-');
-hold on;
-plot([cities(bestSolution(end), 1), cities(bestSolution(1), 1)], [cities(bestSolution(end), 2), cities(bestSolution(1), 2)], 'ro-');
-title('Melhor Rota Encontrada');
-xlabel('X');
-ylabel('Y');
-grid on;
+        % Cruzamento
+        offspring = Crossover(selected, crossoverRate);
 
-% Adicionar números de identificação aos pontos
-for i = 1:numCities
-    text(cities(i, 1), cities(i, 2), num2str(i), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'right');
+        % Mutação
+        offspring = Mutate(offspring, mutationRate);
+
+        % Substituição
+        population = offspring;
+
+        % Melhor solução na geração atual
+        [bestFitness, bestIndex] = min(fitness);
+        bestRoute = population(bestIndex, :);
+
+        % Atualizar a melhor solução global
+        if bestFitness < bestFitnessOverall
+            bestFitnessOverall = bestFitness;
+            bestRouteOverall = bestRoute;
+        end
+
+        % Plotando a melhor rota da geração atual
+        plotRoute(cities, bestRoute);
+        title(sprintf('Geração: %d, Distância: %.2f', gen, bestFitness));
+        pause(0.01);
+    end
+
+    % Plotando a melhor rota geral ao final
+    figure;
+    plotRoute(cities, bestRouteOverall);
+    title(sprintf('Melhor Rota Encontrada: Distância: %.2f', bestFitnessOverall));
 end

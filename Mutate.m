@@ -1,10 +1,12 @@
-% Função: Mutate.m
-function newPopulation = Mutate(population, mutationRate)
-    newPopulation = population;
-    for i = 1:size(population, 1)
+function mutated = Mutate(offspring, mutationRate)
+    [popSize, nCities] = size(offspring);
+    mutated = offspring;
+    for i = 1:popSize
         if rand < mutationRate
-            idx = randperm(size(population, 2), 2);
-            newPopulation(i, idx) = newPopulation(i, flip(idx));
+            mutationPoints = randperm(nCities, 2);
+            temp = mutated(i, mutationPoints(1));
+            mutated(i, mutationPoints(1)) = mutated(i, mutationPoints(2));
+            mutated(i, mutationPoints(2)) = temp;
         end
     end
 end

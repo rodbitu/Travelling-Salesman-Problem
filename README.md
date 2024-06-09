@@ -53,3 +53,9 @@ The implementation is done in MATLAB, leveraging its powerful computational and 
 ## Conclusion
 
 The Genetic Algorithm provides an effective approach to solving the Travelling Salesman Problem, offering good approximations in a reasonable timeframe. By tuning the selection criteria, crossover, and mutation operators, the GA can be optimized for better performance. This project demonstrates the practical application of GAs in combinatorial optimization and highlights the impact of different GA parameters on solution quality.
+
+## Collaborators
+
+- [![Luciano Silva](https://img.shields.io/github/followers/Lucsaj?label=Luciano%20Silva&style=style=for-the-badge)](https://github.com/Lucsaj)
+- [![Matheus Monteiro](https://img.shields.io/github/followers/Matheus-Monteiro2001?label=Matheus%20Monteiro&style=style=for-the-badge)](https://github.com/Matheus-Monteiro2001)
+- [![Rodrigo Bitu](https://img.shields.io/github/followers/rodBitu?label=Rodrigo%20Bitu&style=style=for-the-badge)](https://github.com/rodbitu)
