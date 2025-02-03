@@ -1,4 +1,4 @@
-# Travelling Salesman Problem Using Genetic Algorithm
+<h1 align="center">Travelling Salesman Problem Using Genetic Algorithm</h1>
 
 ## Overview
 
